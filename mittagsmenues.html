@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mittagsmenüs</title>
+  <link id="favicon" rel="icon" href="besteck.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange: #ea7b0c;
+      --orange-light: #fd9827;
+      --orange-glow: rgba(234, 123, 12, 0.18);
+      --bg: #0f0e0d;
+      --surface: #1a1815;
+      --surface2: #242220;
+      --border: rgba(255,255,255,0.07);
+      --text: #f5f0ea;
+      --muted: #8a8070;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .noise {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      opacity: 0.4;
+    }
+
+    .glow-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .glow-orb.a {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(234,123,12,0.12), transparent 70%);
+      top: -100px; left: 50%; transform: translateX(-50%);
+    }
+    .glow-orb.b {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(253,152,39,0.07), transparent 70%);
+      bottom: 0; right: 10%;
+    }
+
+    .card {
+      position: relative; z-index: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 48px 52px 44px;
+      width: 480px;
+      text-align: center;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.03), 0 40px 80px rgba(0,0,0,0.5);
+    }
+
+    .icon-wrap {
+      width: 72px; height: 72px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--surface2), var(--surface));
+      border: 1px solid rgba(234,123,12,0.25);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 34px;
+      position: relative;
+    }
+    .icon-wrap::after {
+      content: '';
+      position: absolute; inset: -1px;
+      border-radius: 21px;
+      background: linear-gradient(135deg, rgba(234,123,12,0.4), transparent 60%);
+      z-index: -1;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 36px;
+      letter-spacing: 0.2px;
+    }
+
+    .week-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 5px 14px;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+    .week-badge span {
+      color: var(--orange-light);
+      font-weight: 600;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 16px;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.1px;
+      color: #fff;
+      background: linear-gradient(135deg, #f08214, #e07010);
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      box-shadow: 0 4px 24px rgba(234,123,12,0.35), 0 1px 0 rgba(255,255,255,0.1) inset;
+    }
+    .btn::before {
+      content: '';
+      position: absolute; top: 0; left: -100%;
+      width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      transition: left 0.5s ease;
+    }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 8px 32px rgba(234,123,12,0.45), 0 1px 0 rgba(255,255,255,0.12) inset; }
+    .btn:hover::before { left: 150%; }
+    .btn:active { transform: translateY(0) scale(0.99); }
+
+    .divider {
+      display: flex; align-items: center; gap: 12px;
+      margin: 28px 0 24px;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .divider::before, .divider::after {
+      content: ''; flex: 1;
+      height: 1px; background: var(--border);
+    }
+
+    .links-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .link-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 12px;
+      color: #c0b8ae;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .link-chip:hover {
+      border-color: rgba(234,123,12,0.4);
+      color: var(--orange-light);
+      background: rgba(234,123,12,0.05);
+    }
+    .link-chip .dot {
+      width: 6px; height: 6px; flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--muted);
+      transition: background 0.15s;
+    }
+    .link-chip:hover .dot { background: var(--orange-light); }
+
+    .footer {
+      position: fixed; bottom: 18px; right: 22px;
+      font-size: 11px; color: #4a4540;
+      z-index: 1; letter-spacing: 0.5px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .card { animation: fadeUp 0.5s ease both; }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="glow-orb a"></div>
+  <div class="glow-orb b"></div>
+
+  <div class="card">
+    <div class="icon-wrap"><img src="besteck.png" alt="Besteck" style="width:38px;height:38px;object-fit:contain;"></div>
+    <h1>Mittagsmenüs</h1>
+    <p class="subtitle">Alle Restaurants auf einen Blick</p>
+
+    <div class="week-badge">
+      Aktuelle Woche · <span id="kw-badge">KW —</span>
+    </div>
+
+    <button class="btn" onclick="openAllMenus()">
+      Alle Menüs öffnen &nbsp;→
+    </button>
+
+    <div class="divider">oder einzeln öffnen</div>
+
+    <div class="links-grid" id="links-grid"></div>
+  </div>
+
+  <div class="footer">© ZENA</div>
+
+  <script>
+    function getCurrentWeekNumber() {
+      const now = new Date();
+      const firstJan = new Date(now.getFullYear(), 0, 1);
+      const days = Math.floor((now - firstJan) / (24 * 60 * 60 * 1000));
+      return Math.ceil((days + firstJan.getDay() + 1) / 7);
+    }
+
+    const kw = getCurrentWeekNumber();
+    const kwString = kw.toString().padStart(2, '0');
+    document.getElementById('kw-badge').textContent = `KW ${kwString}`;
+
+    const sites = [
+      { label: "Gantner Kantine",    url: "https://essen.aqua-soziales.com/Aqua/Web/aqua.nsf/xpMenueNaechsteWoche.xsp" },
+      { label: "U1",  url: "https://www.u1essenundmehr.at/mittagsmenue/" },
+      { label: "Café Remise",      url: "https://www.cafe-remise.at/index.php/menue/mittagsmenue" },
+      { label: "Da Pino",           url: "https://dapino.at/mittagsmenue/" },
+      { label: "Rosenegg",         url: "https://www.rosenegg.info/mittagsmenue" },
+      { label: "Yika",             url: "https://www.yika.at/speisekarte/#mittagsmenue" },
+      { label: "Tafelrunde",       url: "https://tafelrunde-gastro.at/mittagsmenues/" },
+      { label: "Café Dörflinger",  url: "https://www.facebook.com/p/Cafe-D%C3%B6rflinger-100063456556096/?locale=de_DE" },
+      { label: "Sutterlüty Bludenz", url: "https://www.sutterluety.at/gusto-menuplane/?_restaurant_menu=bludenz" },
+      { label: "Sutterlüty Ludesch", url: "https://www.sutterluety.at/gusto-menuplane/?_restaurant_menu=ludesch" },
+      { label: "Sutterlüty Gais",  url: "https://www.sutterluety.at/gusto-menuplane/?_restaurant_menu=gais" },
+      { label: "Interspar",        url: `https://flugblatt.interspar.at/menuplane/menuplan-kw${kw}/` },
+      { label: "Cafe am Dorfplatz",        url: "https://www.amdorfplatz-ludesch.at/#Mittagsmenue" },      
+    ];
+
+    const grid = document.getElementById('links-grid');
+    sites.forEach(({ label, url }) => {
+      const a = document.createElement('a');
+      a.className = 'link-chip';
+      a.href = url;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.innerHTML = `<span class="dot"></span>${label}`;
+      grid.appendChild(a);
+    });
+
+    function openAllMenus() {
+      sites.forEach(({ url }) => window.open(url));
+    }
+  </script>
+</body>
+</html>
