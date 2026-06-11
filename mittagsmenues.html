@@ -13,7 +13,6 @@
     :root {
       --orange: #ea7b0c;
       --orange-light: #fd9827;
-      --orange-glow: rgba(234, 123, 12, 0.18);
       --bg: #0f0e0d;
       --surface: #1a1815;
       --surface2: #242220;
@@ -27,7 +26,6 @@
       font-family: 'Inter', sans-serif;
       background: var(--bg);
       color: var(--text);
-      overflow: hidden;
     }
 
     body {
@@ -36,6 +34,7 @@
       align-items: center;
       justify-content: center;
       min-height: 100vh;
+      padding: 32px 16px;
     }
 
     .noise {
@@ -52,12 +51,12 @@
       z-index: 0;
     }
     .glow-orb.a {
-      width: 500px; height: 500px;
+      width: 600px; height: 600px;
       background: radial-gradient(circle, rgba(234,123,12,0.12), transparent 70%);
-      top: -100px; left: 50%; transform: translateX(-50%);
+      top: -150px; left: 50%; transform: translateX(-50%);
     }
     .glow-orb.b {
-      width: 300px; height: 300px;
+      width: 350px; height: 350px;
       background: radial-gradient(circle, rgba(253,152,39,0.07), transparent 70%);
       bottom: 0; right: 10%;
     }
@@ -66,43 +65,42 @@
       position: relative; z-index: 1;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 28px;
-      padding: 48px 52px 44px;
-      width: 480px;
+      border-radius: 32px;
+      padding: 52px 60px 50px;
+      width: min(580px, 100%);
       text-align: center;
       box-shadow: 0 0 0 1px rgba(255,255,255,0.03), 0 40px 80px rgba(0,0,0,0.5);
     }
 
     .icon-wrap {
-      width: 72px; height: 72px;
-      border-radius: 20px;
+      width: 84px; height: 84px;
+      border-radius: 24px;
       background: linear-gradient(135deg, var(--surface2), var(--surface));
       border: 1px solid rgba(234,123,12,0.25);
       display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 24px;
-      font-size: 34px;
+      margin: 0 auto 28px;
       position: relative;
     }
     .icon-wrap::after {
       content: '';
       position: absolute; inset: -1px;
-      border-radius: 21px;
+      border-radius: 25px;
       background: linear-gradient(135deg, rgba(234,123,12,0.4), transparent 60%);
       z-index: -1;
     }
 
     h1 {
-      font-size: 22px;
+      font-size: 26px;
       font-weight: 600;
       letter-spacing: -0.3px;
       color: var(--text);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .subtitle {
-      font-size: 13px;
+      font-size: 15px;
       color: var(--muted);
-      margin-bottom: 36px;
+      margin-bottom: 40px;
       letter-spacing: 0.2px;
     }
 
@@ -113,10 +111,10 @@
       background: var(--surface2);
       border: 1px solid var(--border);
       border-radius: 99px;
-      padding: 5px 14px;
-      font-size: 12px;
+      padding: 6px 16px;
+      font-size: 13px;
       color: var(--muted);
-      margin-bottom: 32px;
+      margin-bottom: 36px;
     }
     .week-badge span {
       color: var(--orange-light);
@@ -125,15 +123,15 @@
 
     .btn {
       width: 100%;
-      padding: 16px;
-      font-size: 15px;
+      padding: 18px;
+      font-size: 16px;
       font-weight: 600;
       font-family: 'Inter', sans-serif;
       letter-spacing: 0.1px;
       color: #fff;
       background: linear-gradient(135deg, #f08214, #e07010);
       border: none;
-      border-radius: 14px;
+      border-radius: 16px;
       cursor: pointer;
       position: relative;
       overflow: hidden;
@@ -153,9 +151,9 @@
 
     .divider {
       display: flex; align-items: center; gap: 12px;
-      margin: 28px 0 24px;
+      margin: 32px 0 28px;
       color: var(--muted);
-      font-size: 11px;
+      font-size: 12px;
       letter-spacing: 0.5px;
       text-transform: uppercase;
     }
@@ -167,18 +165,18 @@
     .links-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      gap: 10px;
     }
 
     .link-chip {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 9px 12px;
+      gap: 10px;
+      padding: 11px 14px;
       background: var(--surface2);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      font-size: 12px;
+      border-radius: 12px;
+      font-size: 13px;
       color: #c0b8ae;
       cursor: pointer;
       text-decoration: none;
@@ -193,8 +191,9 @@
       color: var(--orange-light);
       background: rgba(234,123,12,0.05);
     }
+
     .link-chip .dot {
-      width: 6px; height: 6px; flex-shrink: 0;
+      width: 7px; height: 7px; flex-shrink: 0;
       border-radius: 50%;
       background: var(--muted);
       transition: background 0.15s;
@@ -202,8 +201,8 @@
     .link-chip:hover .dot { background: var(--orange-light); }
 
     .footer {
-      position: fixed; bottom: 18px; right: 22px;
-      font-size: 11px; color: #4a4540;
+      position: fixed; bottom: 20px; right: 24px;
+      font-size: 12px; color: #4a4540;
       z-index: 1; letter-spacing: 0.5px;
     }
 
@@ -212,75 +211,128 @@
       to   { opacity: 1; transform: translateY(0); }
     }
     .card { animation: fadeUp 0.5s ease both; }
+
+    /* Mobil */
+    @media (max-width: 520px) {
+      .card { padding: 36px 24px 32px; border-radius: 24px; }
+      h1 { font-size: 22px; }
+      .subtitle { font-size: 13px; }
+      .icon-wrap { width: 68px; height: 68px; }
+      .btn { font-size: 15px; padding: 15px; }
+      .link-chip { font-size: 12px; padding: 9px 11px; }
+    }
   </style>
 </head>
 <body>
-  <div class="noise"></div>
-  <div class="glow-orb a"></div>
-  <div class="glow-orb b"></div>
+<div class="noise"></div>
+<div class="glow-orb a"></div>
+<div class="glow-orb b"></div>
 
-  <div class="card">
-    <div class="icon-wrap"><img src="besteck.png" alt="Besteck" style="width:38px;height:38px;object-fit:contain;"></div>
-    <h1>Mittagsmenüs</h1>
-    <p class="subtitle">Alle Restaurants auf einen Blick</p>
+<div class="card">
+  <div class="icon-wrap"><img src="besteck.png" alt="Besteck" style="width:44px;height:44px;object-fit:contain;"></div>
+  <h1>Mittagsmenüs</h1>
+  <p class="subtitle">Alle Restaurants auf einen Blick</p>
 
-    <div class="week-badge">
-      Aktuelle Woche · <span id="kw-badge">KW —</span>
-    </div>
-
-    <button class="btn" onclick="openAllMenus()">
-      Alle Menüs öffnen &nbsp;→
-    </button>
-
-    <div class="divider">oder einzeln öffnen</div>
-
-    <div class="links-grid" id="links-grid"></div>
+  <div class="week-badge">
+    Aktuelle Woche · <span id="kw-badge">KW —</span>
   </div>
 
-  <div class="footer">© ZENA</div>
+  <button class="btn" onclick="openAllMenus()">
+    Alle Menüs öffnen &nbsp;→
+  </button>
 
-  <script>
-    function getCurrentWeekNumber() {
-      const now = new Date();
-      const firstJan = new Date(now.getFullYear(), 0, 1);
-      const days = Math.floor((now - firstJan) / (24 * 60 * 60 * 1000));
-      return Math.ceil((days + firstJan.getDay() + 1) / 7);
+  <div class="divider">oder einzeln öffnen</div>
+
+  <div class="links-grid" id="links-grid"></div>
+</div>
+
+<div class="footer">© ZENA</div>
+
+<script>
+  function getCurrentWeekNumber() {
+    const now = new Date();
+    const firstJan = new Date(now.getFullYear(), 0, 1);
+    const days = Math.floor((now - firstJan) / (24 * 60 * 60 * 1000));
+    return Math.ceil((days + firstJan.getDay() + 1) / 7);
+  }
+
+  const kw = getCurrentWeekNumber();
+  const kwString = kw.toString().padStart(2, '0');
+  document.getElementById('kw-badge').textContent = `KW ${kwString}`;
+
+  const sites = [
+    { label: "B12 Gantner Kantine", url: "https://essen.aqua-soziales.com/Aqua/Web/aqua.nsf/xpMenueNaechsteWoche.xsp" },
+    { label: "U1", url: "https://www.u1essenundmehr.at/mittagsmenue/", favicon: "https://www.u1essenundmehr.at/wp-content/uploads/2022/09/u1-cafe-restaurant-bludenz-favicon-150x150.png" },
+    { label: "Café Remise", url: "https://www.cafe-remise.at/index.php/menue/mittagsmenue" },
+    { label: "Da Pino", url: "https://dapino.at/mittagsmenue/", favicon: "https://dapino.at/wp-content/uploads/2015/10/cropped-Pino_Favicon-32x32.jpg" },
+    { label: "Rosenegg", url: "https://www.rosenegg.info/mittagsmenue", favicon: "https://www.rosenegg.info/uploads/wXnjnyRL/favicon.ico" },
+    { label: "Yika", url: "https://www.yika.at/speisekarte/#mittagsmenue", favicon: "https://www.yika.at/wp-content/uploads/2024/01/favicon.png", whiteBg: true },
+    { label: "Tafelrunde", url: "https://tafelrunde-gastro.at/mittagsmenues/", whiteBg: true },
+    { label: "Café Dörflinger", url: "https://www.facebook.com/p/Cafe-D%C3%B6rflinger-100063456556096/?locale=de_DE", favicon: "favicon/cafeD.jpg" },
+    { label: "Sutterlüty Bludenz", url: "https://www.sutterluety.at/gusto-menuplane/?_restaurant_menu=bludenz", favicon: "https://www.sutterluety.at/wp-content/uploads/fbrfg/favicon-32x32.png" },
+    { label: "Sutterlüty Ludesch", url: "https://www.sutterluety.at/gusto-menuplane/?_restaurant_menu=ludesch", favicon: "https://www.sutterluety.at/wp-content/uploads/fbrfg/favicon-32x32.png" },
+    { label: "Sutterlüty Gais", url: "https://www.sutterluety.at/gusto-menuplane/?_restaurant_menu=gais", favicon: "https://www.sutterluety.at/wp-content/uploads/fbrfg/favicon-32x32.png" },
+    { label: "Interspar", url: `https://flugblatt.interspar.at/menuplane/menuplan-kw${kw}/`, favicon: "https://www.interspar.at/etc.clientlibs/intersparmarktplatz/clientlibs/base/resources/favicons/apple-touch-icon.png" },
+    { label: "Füchsle Bludenz", url: "https://baeckerei-fuchs-bludenz.at/gasthaus-fuchs/#:~:text=Donnerstag", favicon: "https://baeckerei-fuchs-bludenz.at/wp-content/uploads/2025/11/fuchs-favicon-150x150.webp", whiteBg: true },
+    { label: "KOI Asian Kitchen", url: "pdf/koi.pdf", favicon: "favicon/koi.png" },
+  ];
+
+  const grid = document.getElementById('links-grid');
+  sites.forEach(({ label, url, favicon, whiteBg }) => {
+    const a = document.createElement('a');
+    a.className = 'link-chip';
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+
+    const icon = document.createElement('span');
+    icon.style.cssText = 'width:16px;height:16px;flex-shrink:0;display:flex;align-items:center;justify-content:center;';
+
+    let faviconSrc = favicon;
+    if (!faviconSrc) {
+      try { faviconSrc = new URL(url).origin + '/favicon.ico'; } catch { faviconSrc = null; }
     }
 
-    const kw = getCurrentWeekNumber();
-    const kwString = kw.toString().padStart(2, '0');
-    document.getElementById('kw-badge').textContent = `KW ${kwString}`;
+    if (faviconSrc) {
+      const img = document.createElement('img');
+      img.alt = '';
+      img.style.cssText = `width:16px;height:16px;border-radius:3px;object-fit:contain;opacity:0.75;transition:opacity 0.15s;${whiteBg ? 'background:#fff;padding:1px;' : ''}`;
+      img.src = faviconSrc;
 
-    const sites = [
-      { label: "Gantner Kantine",    url: "https://essen.aqua-soziales.com/Aqua/Web/aqua.nsf/xpMenueNaechsteWoche.xsp" },
-      { label: "U1",  url: "https://www.u1essenundmehr.at/mittagsmenue/" },
-      { label: "Café Remise",      url: "https://www.cafe-remise.at/index.php/menue/mittagsmenue" },
-      { label: "Da Pino",           url: "https://dapino.at/mittagsmenue/" },
-      { label: "Rosenegg",         url: "https://www.rosenegg.info/mittagsmenue" },
-      { label: "Yika",             url: "https://www.yika.at/speisekarte/#mittagsmenue" },
-      { label: "Tafelrunde",       url: "https://tafelrunde-gastro.at/mittagsmenues/" },
-      { label: "Café Dörflinger",  url: "https://www.facebook.com/p/Cafe-D%C3%B6rflinger-100063456556096/?locale=de_DE" },
-      { label: "Sutterlüty Bludenz", url: "https://www.sutterluety.at/gusto-menuplane/?_restaurant_menu=bludenz" },
-      { label: "Sutterlüty Ludesch", url: "https://www.sutterluety.at/gusto-menuplane/?_restaurant_menu=ludesch" },
-      { label: "Sutterlüty Gais",  url: "https://www.sutterluety.at/gusto-menuplane/?_restaurant_menu=gais" },
-      { label: "Interspar",        url: `https://flugblatt.interspar.at/menuplane/menuplan-kw${kw}/` },
-      { label: "Cafe am Dorfplatz",        url: "https://www.amdorfplatz-ludesch.at/#Mittagsmenue" },      
-    ];
+      let triedPng = !!favicon;
+      img.onerror = () => {
+        if (!triedPng) {
+          triedPng = true;
+          try { img.src = new URL(url).origin + '/favicon.png'; } catch { showDot(); }
+        } else {
+          showDot();
+        }
+      };
 
-    const grid = document.getElementById('links-grid');
-    sites.forEach(({ label, url }) => {
-      const a = document.createElement('a');
-      a.className = 'link-chip';
-      a.href = url;
-      a.target = '_blank';
-      a.rel = 'noopener';
-      a.innerHTML = `<span class="dot"></span>${label}`;
-      grid.appendChild(a);
-    });
+      function showDot() {
+        img.style.display = 'none';
+        const dot = document.createElement('span');
+        dot.style.cssText = 'width:7px;height:7px;border-radius:50%;background:var(--muted);flex-shrink:0;';
+        icon.appendChild(dot);
+      }
 
-    function openAllMenus() {
-      sites.forEach(({ url }) => window.open(url));
+      a.addEventListener('mouseenter', () => { img.style.opacity = '1'; });
+      a.addEventListener('mouseleave', () => { img.style.opacity = '0.75'; });
+      icon.appendChild(img);
+    } else {
+      const dot = document.createElement('span');
+      dot.style.cssText = 'width:7px;height:7px;border-radius:50%;background:var(--muted);';
+      icon.appendChild(dot);
     }
-  </script>
+
+    a.appendChild(icon);
+    a.appendChild(document.createTextNode(label));
+    grid.appendChild(a);
+  });
+
+  function openAllMenus() {
+    sites.forEach(({ url }) => window.open(url));
+  }
+</script>
 </body>
 </html>
