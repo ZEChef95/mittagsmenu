@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mittagsmenüs</title>
-  <link id="favicon" rel="icon" href="besteck.png" type="image/png">
+  <link id="favicon" rel="icon" href="favicon/besteck.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -13,12 +13,36 @@
     :root {
       --orange: #ea7b0c;
       --orange-light: #fd9827;
+    }
+
+    [data-theme="dark"] {
       --bg: #0f0e0d;
       --surface: #1a1815;
       --surface2: #242220;
       --border: rgba(255,255,255,0.07);
       --text: #f5f0ea;
       --muted: #8a8070;
+      --chip-text: #c0b8ae;
+      --footer: #4a4540;
+      --toggle-bg: #242220;
+      --toggle-border: rgba(255,255,255,0.1);
+      --toggle-icon: #8a8070;
+      --hint: #6a6058;
+    }
+
+    [data-theme="light"] {
+      --bg: #f5f2ee;
+      --surface: #ffffff;
+      --surface2: #f0ece6;
+      --border: rgba(0,0,0,0.08);
+      --text: #1a1410;
+      --muted: #8a7a6a;
+      --chip-text: #4a3c30;
+      --footer: #b0a898;
+      --toggle-bg: #e8e2da;
+      --toggle-border: rgba(0,0,0,0.1);
+      --toggle-icon: #6a5c50;
+      --hint: #a09080;
     }
 
     html, body {
@@ -26,6 +50,7 @@
       font-family: 'Inter', sans-serif;
       background: var(--bg);
       color: var(--text);
+      transition: background 0.2s, color 0.2s;
     }
 
     body {
@@ -69,8 +94,35 @@
       padding: 52px 60px 50px;
       width: min(580px, 100%);
       text-align: center;
-      box-shadow: 0 0 0 1px rgba(255,255,255,0.03), 0 40px 80px rgba(0,0,0,0.5);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.03), 0 40px 80px rgba(0,0,0,0.15);
+      transition: background 0.2s, border-color 0.2s;
     }
+
+    /* Theme toggle – oben rechts innerhalb der Card */
+    .theme-toggle {
+      position: absolute;
+      top: 18px; right: 18px;
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: var(--toggle-bg);
+      border: 1px solid var(--toggle-border);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, border-color 0.2s;
+      color: var(--toggle-icon);
+      font-size: 17px;
+      line-height: 1;
+      user-select: none;
+    }
+    .theme-toggle:hover {
+      border-color: rgba(234,123,12,0.4);
+      color: var(--orange-light);
+    }
+    .icon-sun, .icon-moon { pointer-events: none; }
+    [data-theme="dark"]  .icon-sun  { display: none; }
+    [data-theme="dark"]  .icon-moon { display: block; }
+    [data-theme="light"] .icon-sun  { display: block; }
+    [data-theme="light"] .icon-moon { display: none; }
 
     .icon-wrap {
       width: 84px; height: 84px;
@@ -115,6 +167,7 @@
       font-size: 13px;
       color: var(--muted);
       margin-bottom: 36px;
+      transition: background 0.2s;
     }
     .week-badge span {
       color: var(--orange-light);
@@ -149,6 +202,13 @@
     .btn:hover::before { left: 150%; }
     .btn:active { transform: translateY(0) scale(0.99); }
 
+    .popup-hint {
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--hint);
+      letter-spacing: 0.2px;
+    }
+
     .divider {
       display: flex; align-items: center; gap: 12px;
       margin: 32px 0 28px;
@@ -177,7 +237,7 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       font-size: 13px;
-      color: #c0b8ae;
+      color: var(--chip-text);
       cursor: pointer;
       text-decoration: none;
       transition: border-color 0.15s, color 0.15s, background 0.15s;
@@ -202,7 +262,7 @@
 
     .footer {
       position: fixed; bottom: 20px; right: 24px;
-      font-size: 12px; color: #4a4540;
+      font-size: 12px; color: var(--footer);
       z-index: 1; letter-spacing: 0.5px;
     }
 
@@ -212,7 +272,6 @@
     }
     .card { animation: fadeUp 0.5s ease both; }
 
-    /* Mobil */
     @media (max-width: 520px) {
       .card { padding: 36px 24px 32px; border-radius: 24px; }
       h1 { font-size: 22px; }
@@ -229,7 +288,12 @@
 <div class="glow-orb b"></div>
 
 <div class="card">
-  <div class="icon-wrap"><img src="besteck.png" alt="Besteck" style="width:44px;height:44px;object-fit:contain;"></div>
+  <button class="theme-toggle" onclick="toggleTheme()" title="Hell/Dunkel wechseln">
+    <span class="icon-sun">☀️</span>
+    <span class="icon-moon">🌙</span>
+  </button>
+
+  <div class="icon-wrap"><img src="favicon/besteck.png" alt="Besteck" style="width:44px;height:44px;object-fit:contain;"></div>
   <h1>Mittagsmenüs</h1>
   <p class="subtitle">Alle Restaurants auf einen Blick</p>
 
@@ -240,13 +304,14 @@
   <button class="btn" onclick="openAllMenus()">
     Alle Menüs öffnen &nbsp;→
   </button>
+  <p class="popup-hint">⚠️ Bitte Popups für diese Seite zulassen</p>
 
   <div class="divider">oder einzeln öffnen</div>
 
   <div class="links-grid" id="links-grid"></div>
 </div>
 
-<div class="footer">© ZENA</div>
+<div class="footer">© ZEST</div>
 
 <script>
   function getCurrentWeekNumber() {
@@ -259,6 +324,17 @@
   const kw = getCurrentWeekNumber();
   const kwString = kw.toString().padStart(2, '0');
   document.getElementById('kw-badge').textContent = `KW ${kwString}`;
+
+  // Theme persistieren
+  const saved = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+
+  function toggleTheme() {
+    const current = document.documentElement.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  }
 
   const sites = [
     { label: "B12 Gantner Kantine", url: "https://essen.aqua-soziales.com/Aqua/Web/aqua.nsf/xpMenueNaechsteWoche.xsp" },
