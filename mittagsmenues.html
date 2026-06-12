@@ -2,7 +2,7 @@
 <html lang="de" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Mittagsmenüs</title>
   <link id="favicon" rel="icon" href="favicon/besteck.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -60,6 +60,8 @@
       justify-content: center;
       min-height: 100vh;
       padding: 32px 16px;
+      padding-top: max(32px, env(safe-area-inset-top));
+      padding-bottom: max(32px, env(safe-area-inset-bottom));
     }
 
     .noise {
@@ -260,10 +262,16 @@
     }
     .link-chip:hover .dot { background: var(--orange-light); }
 
-    .footer {
-      position: fixed; bottom: 20px; right: 24px;
+    [data-theme="light"] .favicon-darkbg {
+      background: #000;
+      padding: 1px;
+    }
+
+    .footer-inline {
+      position: absolute;
+      top: 18px; left: 22px;
       font-size: 12px; color: var(--footer);
-      z-index: 1; letter-spacing: 0.5px;
+      letter-spacing: 0.5px;
     }
 
     @keyframes fadeUp {
@@ -292,6 +300,7 @@
     <span class="icon-sun">☀️</span>
     <span class="icon-moon">🌙</span>
   </button>
+  <div class="footer-inline">© ZEST</div>
 
   <div class="icon-wrap"><img src="favicon/besteck.png" alt="Besteck" style="width:44px;height:44px;object-fit:contain;"></div>
   <h1>Mittagsmenüs</h1>
@@ -311,7 +320,6 @@
   <div class="links-grid" id="links-grid"></div>
 </div>
 
-<div class="footer">© ZEST</div>
 
 <script>
   function getCurrentWeekNumber() {
@@ -339,7 +347,7 @@
   const sites = [
     { label: "B12 Gantner Kantine", url: "https://essen.aqua-soziales.com/Aqua/Web/aqua.nsf/xpMenueNaechsteWoche.xsp" },
     { label: "U1", url: "https://www.u1essenundmehr.at/mittagsmenue/", favicon: "https://www.u1essenundmehr.at/wp-content/uploads/2022/09/u1-cafe-restaurant-bludenz-favicon-150x150.png" },
-    { label: "Café Remise", url: "https://www.cafe-remise.at/index.php/menue/mittagsmenue" },
+    { label: "Café Remise", url: "https://www.cafe-remise.at/index.php/menue/mittagsmenue", darkBg: true },
     { label: "Da Pino", url: "https://dapino.at/mittagsmenue/", favicon: "https://dapino.at/wp-content/uploads/2015/10/cropped-Pino_Favicon-32x32.jpg" },
     { label: "Rosenegg", url: "https://www.rosenegg.info/mittagsmenue", favicon: "https://www.rosenegg.info/uploads/wXnjnyRL/favicon.ico" },
     { label: "Yika", url: "https://www.yika.at/speisekarte/#mittagsmenue", favicon: "https://www.yika.at/wp-content/uploads/2024/01/favicon.png", whiteBg: true },
@@ -354,7 +362,7 @@
   ];
 
   const grid = document.getElementById('links-grid');
-  sites.forEach(({ label, url, favicon, whiteBg }) => {
+  sites.forEach(({ label, url, favicon, whiteBg, darkBg }) => {
     const a = document.createElement('a');
     a.className = 'link-chip';
     a.href = url;
@@ -372,7 +380,9 @@
     if (faviconSrc) {
       const img = document.createElement('img');
       img.alt = '';
-      img.style.cssText = `width:16px;height:16px;border-radius:3px;object-fit:contain;opacity:0.75;transition:opacity 0.15s;${whiteBg ? 'background:#fff;padding:1px;' : ''}`;
+      if (whiteBg) img.classList.add('favicon-whitebg');
+      if (darkBg) img.classList.add('favicon-darkbg');
+      img.style.cssText = `width:16px;height:16px;border-radius:3px;object-fit:contain;opacity:0.75;transition:opacity 0.15s, background 0.2s;${whiteBg ? 'background:#fff;padding:1px;' : ''}`;
       img.src = faviconSrc;
 
       let triedPng = !!favicon;
